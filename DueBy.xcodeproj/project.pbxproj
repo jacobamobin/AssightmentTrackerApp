@@ -16,6 +16,11 @@
 			path = DueBy;
 			sourceTree = "<group>";
 		};
+		2C78F8802CF81A8100D1B584 /* Event */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Event;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +39,7 @@
 			children = (
 				2C78F8132CF7DA7B00D1B584 /* DueBy */,
 				2C78F8122CF7DA7B00D1B584 /* Products */,
+				2C78F8802CF81A8100D1B584 /* Event */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,6 +68,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				2C78F8132CF7DA7B00D1B584 /* DueBy */,
+				2C78F8802CF81A8100D1B584 /* Event */,
 			);
 			name = DueBy;
 			packageProductDependencies = (
