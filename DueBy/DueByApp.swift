@@ -13,6 +13,8 @@ struct DueByApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-        }.modelContainer(for: Event.self)
+        }.modelContainer(for: [Event.self, Classes.self])
+        
     }
 }
+  

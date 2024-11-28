@@ -6,10 +6,33 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ClassSettings: View {
+    
+    @Environment(\.modelContext) private var contextb
+    
+    @Query private var classes: [Classes]
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Button("Add Class") {
+                addClass()
+            }
+            
+            List {
+                ForEach(classes) { subject in
+                    Text(subject.name)
+                }
+            }
+        }
+        
+    }
+    
+    
+    func addClass() {
+        let item = Classes(name: "New Class", colorString: "blue")
+        contextb.insert(item)
     }
 }
 
