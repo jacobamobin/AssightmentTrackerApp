@@ -14,13 +14,22 @@ class Classes: Identifiable {
     
     var id: String
     var name: String
-    var color: Color
+    var colorHex: String // Store color as a hex string
     
-    init(name: String, color: Color) {
-        
+    init(name: String, colorHex: String) {
         self.id = UUID().uuidString
         self.name = name
-        self.color = color
-        
+        self.colorHex = colorHex
+    }
+    
+    // Helper to get a SwiftUI Color from the hex string
+    func getColor() -> Color {
+        return Color(hex: colorHex)
+    }
+    
+    // Helper to set the hex color using a SwiftUI Color
+    func setColor(_ color: Color) {
+        self.colorHex = color.toHex() ?? "#FFFFFF" // Default to white if conversion fails
     }
 }
+

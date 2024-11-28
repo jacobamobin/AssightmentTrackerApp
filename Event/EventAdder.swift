@@ -11,11 +11,14 @@ import SwiftData
 
 struct EventAdder: View {
     @Environment(\.modelContext) private var context
+    
+    @Query private var events: [Event]
+    
     @State private var eventTitle: String = ""
     @State private var eventDate: Date = .now
     @State private var className: String = ""
     @State private var eventColor: Color = .gray
-    @State private var eventType: Int = 2
+    @State private var eventType: Int = 1
     
     var body: some View {
         NavigationStack {
@@ -33,7 +36,8 @@ struct EventAdder: View {
             .navigationTitle("Add Event")
             .toolbar {
                 Button("Save") {
-                    //var newEvent = Event(eventTitle: eventTitle, eventDate: eventDate, className: className, eventColor: eventColor, type: eventType, completed: false)
+                    let item = Event(name: eventTitle, dueDate: eventDate, type: eventType, className: className, isCompleted: false)
+                    context.insert(item)
                 }
             }
         }
