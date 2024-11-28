@@ -16,13 +16,14 @@ struct ClassSettings: View {
     
     var body: some View {
         VStack {
-            Button("Add Class") {
-                addClass()
-            }
-            
+            Text("Manage Classes")
             List {
                 ForEach(classes) { subject in
                     Text(subject.name)
+                }
+                
+                Button("Add Class") {
+                    addClass(name: "Name")
                 }
             }
         }
@@ -30,7 +31,7 @@ struct ClassSettings: View {
     }
     
     
-    func addClass() {
+    func addClass(name: String) {
         let item = Classes(name: "New Class", colorString: "blue")
         contextb.insert(item)
     }

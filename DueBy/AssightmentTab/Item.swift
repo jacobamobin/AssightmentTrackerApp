@@ -125,6 +125,7 @@ struct Item: View {
 //1) Assightment
 //2) Homework
 //3) Culminating
+//4) Lab
 //4) Essay
 //5) Project
 //6) Presentation
@@ -142,18 +143,20 @@ func TypeText(_ type: Int) -> (String, String) {
     case 3:
         return ("calendar.circle.fill", "Culminating")
     case 4:
-        return ("doc.text.fill", "Essay")
+        return ("testtube.fill", "Lab")
     case 5:
-        return ("folder.fill", "Project")
+        return ("doc.text.fill", "Essay")
     case 6:
-        return ("speaker.fill", "Presentation")
+        return ("folder.fill", "Project")
     case 7:
-        return ("pencil.and.list.clipboard", "Quiz")
+        return ("speaker.fill", "Presentation")
     case 8:
-        return ("pencil.and.list.clipboard", "Test")
+        return ("pencil.and.list.clipboard", "Quiz")
     case 9:
-        return ("pencil.and.list.clipboard", "Midterm")
+        return ("pencil.and.list.clipboard", "Test")
     case 10:
+        return ("pencil.and.list.clipboard", "Midterm")
+    case 11:
         return ("pencil.and.list.clipboard", "Exam")
     default:
         return ("questionmark.circle.fill", "Unknown")
@@ -161,6 +164,6 @@ func TypeText(_ type: Int) -> (String, String) {
 }
 
 #Preview {
-    Item(eventTitle: "Culminating", eventDate: Date(), className: "PCS110", eventColor: .blue, type: 10)
+    Item(eventTitle: "Culminating", eventDate: Date(), className: "PCS110", eventColor: .blue, type: 6)
 
 }
