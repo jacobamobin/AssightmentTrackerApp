@@ -9,7 +9,20 @@ import SwiftUI
 
 struct Home: View {
     var body: some View {
-        HomeHeader()
+        NavigationStack {
+            VStack {
+                HomeHeader()
+                
+                Stats()
+                
+                ClassSelector()
+                
+                
+                
+            }.padding(5)
+        }
+        
+        
     }
 }
 
