@@ -10,7 +10,7 @@ import SwiftData
 
 struct ClassSettings: View {
     
-    @Environment(\.modelContext) private var contextb
+    @Environment(\.modelContext) private var context
     
     @Query private var classes: [Classes]
     
@@ -22,19 +22,20 @@ struct ClassSettings: View {
                     Text(subject.name)
                 }
                 
-                Button("Add Class") {
-                    addClass(name: "Name")
+                Button("Add Class")
+                    AddClass()
                 }
+                
             }
         }
         
     }
-    
-    
-    func addClass(name: String) {
+
+    func addClass() {
         let item = Classes(name: "New Class", colorString: "blue")
-        contextb.insert(item)
+        context.insert(item)
     }
+    
 }
 
 #Preview {

@@ -10,6 +10,8 @@ import SwiftUI
 
 struct Item: View {
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var eventTitle: String
     var eventDate: Date
     var className: String
@@ -66,8 +68,12 @@ struct Item: View {
                 .frame(width: .infinity, height: 80)
                 .padding(8)
                 //.foregroundColor(eventColor.opacity(0.5))
-                .foregroundStyle(fillColor(for: className).opacity(0.7))
-                
+                .foregroundStyle(
+                                colorScheme == .dark
+                                    ? fillColor(for: className).opacity(0.4)
+                                    : fillColor(for: className).opacity(0.85)
+                            )
+                .shadow(radius: 4)
             
             HStack {
                 RoundedRectangle(cornerRadius: 20)
