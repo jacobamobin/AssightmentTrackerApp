@@ -9,8 +9,8 @@ import SwiftUI
 
 struct Search: View {
     
-    @State private var searchText: String = ""
-    @State private var showExpired: Bool = false
+    @State public var searchText: String = ""
+    @State public var showExpired: Bool = false
     
     var body: some View {
         
