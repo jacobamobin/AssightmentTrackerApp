@@ -16,30 +16,45 @@ struct Home: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                HomeHeader()
-                
-                Stats()
-                
-                ClassSelector()
-                
+            ZStack {
                 VStack {
-                    Text("Add events")
-                    Button("add an item") {
-                        addItem()
-                    }
+                    HomeHeader()
                     
-                    ScrollView {
-                        ForEach(events) { item in
-                            Item(eventTitle: item.className, eventDate: item.dueDate,
-                                 className: item.className,
-                                 eventColor: Color.blue,
-                                 type: item.type)
+                    Stats()
+                    
+                    ClassSelector()
+                    
+                    VStack {
+                        Text("Add events")
+                        Button("add an item") {
+                            addItem()
+                        }
+                        
+                        ScrollView {
+                            ForEach(events) { item in
+                                Item(eventTitle: item.className, eventDate: item.dueDate,
+                                     className: item.className,
+                                     eventColor: Color.blue,
+                                     type: item.type)
+                            }
                         }
                     }
-                }
+                    
+                }.padding(5)
                 
-            }.padding(5)
+                VStack(alignment: .trailing) {
+                    Spacer()
+                    HStack(alignment: .bottom) {
+                        Spacer()
+                        NavigationLink(destination: EventAdder()) {
+                            AddButton()
+                        }
+                        
+                    }.padding(5)
+                }.padding(5)
+                
+            }
+            
             
         }
     }

@@ -24,7 +24,7 @@ class Classes: Identifiable {
     
     // Helper to get a SwiftUI Color from the hex string
     func getColor() -> Color {
-        return Color(hex: colorHex)
+        return Color(hex: colorHex) ?? .white // Default to white if conversion fails
     }
     
     // Helper to set the hex color using a SwiftUI Color
@@ -32,4 +32,5 @@ class Classes: Identifiable {
         self.colorHex = color.toHex() ?? "#FFFFFF" // Default to white if conversion fails
     }
 }
+
 

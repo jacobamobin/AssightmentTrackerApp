@@ -24,12 +24,48 @@ struct Item: View {
         self.type = type
     }
     
+    var classes: [String: Color] = [
+        "MTH110": .blue,
+        "CPS213": .green,
+        "CPS109": .yellow,
+        "PCS110": .purple,
+        "DST300": .red
+    ]
+    
+    
+    var colorDictionary: [Color: Color] = [
+        .red: .orange,
+        .orange: .yellow,
+        .yellow: .green,
+        .green: .teal,
+        .teal: .blue,
+        .blue: .indigo,
+        .indigo: .purple,
+        .purple: .pink,
+        .pink: .red,
+        .gray: .gray
+    ]
+    
+    private func fillColor(for className: String) -> LinearGradient {
+        let baseColor = classes[className] ?? .gray
+        let secondaryColor = colorDictionary[baseColor] ?? .gray
+        
+        // Return the LinearGradient directly
+        return LinearGradient(
+            colors: [baseColor, secondaryColor],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+    
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 4) //Background Rect
                 .frame(width: .infinity, height: 80)
                 .padding(8)
-                .foregroundColor(eventColor.opacity(0.5))
+                //.foregroundColor(eventColor.opacity(0.5))
+                .foregroundStyle(fillColor(for: className).opacity(0.7))
+                
             
             HStack {
                 RoundedRectangle(cornerRadius: 20)
@@ -63,12 +99,15 @@ struct Item: View {
                     Text("In 3 Days")
                         .font(.title2)
                         .fontWeight(.bold)
+                        .foregroundColor(.white)
                     
                     Text(eventDate, format: .dateTime.day().month().year())
                         .font(.caption)
                         .foregroundColor(.white.opacity(0.6))
                     
                     Text(className)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white.opacity(0.8))
                     
                 }.padding(.trailing, 5)
                 
@@ -120,6 +159,6 @@ func TypeText(_ type: Int) -> (String, String) {
 }
 
 #Preview {
-    Item(eventTitle: "Culminating", eventDate: Date(), className: "Math 101", eventColor: .blue, type: 10)
+    Item(eventTitle: "Culminating", eventDate: Date(), className: "MTH110", eventColor: .blue, type: 10)
 
 }

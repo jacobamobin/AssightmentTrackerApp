@@ -27,13 +27,22 @@ struct EventAdder: View {
                 DatePicker("Event Date", selection: $eventDate, displayedComponents: .date)
                 TextField("Class Name", text: $className)
                 Picker("Event Type", selection: $eventType) {
-                    Text("Type 1").tag(1)
-                    Text("Type 2").tag(2)
-                    Text("Type 3").tag(3)
+                    
+                    Text("Assightment").tag(1)
+                    Text("Homework").tag(2)
+                    Text("Culminating").tag(3)
+                    Text("Essay").tag(4)
+                    Text("Project").tag(5)
+                    Text("Presentation").tag(6)
+                    Text("Quiz").tag(7)
+                    Text("Test").tag(8)
+                    Text("Midterm").tag(9)
+                    Text("Exam").tag(10)
+                    
                 }
-                ColorPicker("Event Color", selection: $eventColor)
+                //ColorPicker("Event Color", selection: $eventColor)
             }
-            .navigationTitle("Add Event")
+            .navigationTitle("Add Work")
             .toolbar {
                 Button("Save") {
                     let item = Event(name: eventTitle, dueDate: eventDate, type: eventType, className: className, isCompleted: false)
