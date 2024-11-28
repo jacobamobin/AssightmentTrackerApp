@@ -11,8 +11,10 @@ import SwiftData
 
 struct EventAdder: View {
     @Environment(\.modelContext) private var context
+    @Environment(\.dismiss) private var dismiss
     
     @Query private var events: [Event]
+    @Query private var classes: [Classes]
     
     @State private var eventTitle: String = ""
     @State private var eventDate: Date = .now
@@ -25,7 +27,13 @@ struct EventAdder: View {
             Form {
                 TextField("Event Title", text: $eventTitle)
                 DatePicker("Event Date", selection: $eventDate, displayedComponents: .date)
-                TextField("Class Name", text: $className)
+                Picker("Class Name", selection: $className) {
+                    ForEach(classes, id: \.self) { item in
+                        Text(item.name).tag(item.name)
+                    }
+                }
+                
+                
                 Picker("Event Type", selection: $eventType) {
                     
                     Text("Assightment").tag(1)
@@ -47,6 +55,8 @@ struct EventAdder: View {
                 Button("Save") {
                     let item = Event(name: eventTitle, dueDate: eventDate, type: eventType, className: className, isCompleted: false)
                     context.insert(item)
+                    dismiss()
+
                 }
             }
         }

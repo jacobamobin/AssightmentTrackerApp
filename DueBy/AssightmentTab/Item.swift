@@ -13,14 +13,12 @@ struct Item: View {
     var eventTitle: String
     var eventDate: Date
     var className: String
-    var eventColor: Color
     var type: Int
         
     init(eventTitle: String, eventDate: Date, className: String, eventColor: Color, type: Int) {
         self.eventTitle = eventTitle
         self.eventDate = eventDate
         self.className = className
-        self.eventColor = eventColor
         self.type = type
     }
     
@@ -58,6 +56,10 @@ struct Item: View {
         )
     }
     
+    private func eventColor() -> Color {
+        return classes[className] ?? .gray
+    }
+    
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 4) //Background Rect
@@ -70,7 +72,7 @@ struct Item: View {
             HStack {
                 RoundedRectangle(cornerRadius: 20)
                     .frame(width: 5, height: 70)
-                    .foregroundColor(eventColor)
+                    .foregroundColor(eventColor())
                 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(eventTitle)
@@ -159,6 +161,6 @@ func TypeText(_ type: Int) -> (String, String) {
 }
 
 #Preview {
-    Item(eventTitle: "Culminating", eventDate: Date(), className: "MTH110", eventColor: .blue, type: 10)
+    Item(eventTitle: "Culminating", eventDate: Date(), className: "PCS110", eventColor: .blue, type: 10)
 
 }

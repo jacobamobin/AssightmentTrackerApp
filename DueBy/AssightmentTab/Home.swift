@@ -13,6 +13,7 @@ struct Home: View {
     @Environment(\.modelContext) private var context
     
     @Query private var events: [Event]
+    @Query private var classes: [Classes]
     
     var body: some View {
         NavigationStack {
