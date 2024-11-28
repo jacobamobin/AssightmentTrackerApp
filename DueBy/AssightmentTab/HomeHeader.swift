@@ -13,19 +13,27 @@ struct HomeHeader: View {
     
     var body: some View {
         
-        VStack(alignment: .leading, spacing: 20) {
-            // Header
-            
-            Text("Assightments")
-                .font(.largeTitle)
-                .fontWeight(.bold)
+            VStack(alignment: .leading, spacing: 20) {
+                HStack {
+                    Text("Assightments")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        
+                    
+                    Spacer()
+                    
+                    NavigationLink(destination: Search()) {
+                        Image(systemName: "magnifyingglass")
+                            .font(.largeTitle)
+                    }
+                    
+                        
+                }
                 .padding(.horizontal)
-            
-            
-            
-            Spacer() // Pushes content to the top
-        }
-        .padding(.top, 20)
+                
+            }
+            .padding(.top, 20)
+        
     }
         
 }

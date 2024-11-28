@@ -8,33 +8,42 @@
 import SwiftUI
 
 struct ClassSelector: View {
-    
-    var classes: [String] = ["MTH110", "CPS213", "CPS109", "PCS110", "DST300"]
+    var classes: [String: Color] = [
+        "MTH110": .blue,
+        "CPS213": .green,
+        "CPS109": .yellow,
+        "PCS110": .purple,
+        "DST300": .brown
+    ]
     @State private var selectedClass: String?
-    
+
     var body: some View {
         ScrollView(.horizontal) {
-            HStack {
-                ForEach(classes, id: \.self) { `class` in
+            HStack(spacing: 10) {
+                ForEach(classes.keys.sorted(), id: \.self) { className in
                     Button {
-                        selectedClass = `class`
+                        if selectedClass == className {
+                            selectedClass = nil
+                        } else {
+                            selectedClass = className
+                        }
                     } label: {
-                        Text(`class`)
+                        Text(className)
                             .font(.headline)
-                            .foregroundStyle(.white)
+                            .foregroundColor(.white)
                             .padding(10)
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
-                                    .foregroundStyle(.red)
+                                    .fill(selectedClass == className ? (classes[className] ?? .gray) : .gray.opacity(0.7))
                             )
                     }
-                    
-                    
                 }
             }
-        }
+            .padding(.horizontal)
+        }.scrollIndicators(.hidden)
     }
 }
+
 
 #Preview {
     ClassSelector()

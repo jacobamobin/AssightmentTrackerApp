@@ -20,6 +20,9 @@ struct Search: View {
             .background(Color(.systemGray6))
             .cornerRadius(10)
             .padding(.horizontal)
+            .padding(.vertical, 7)
+        
+        ClassSelector()
         
         // Toggle for "Show Expired"
         Toggle(isOn: $showExpired) {
