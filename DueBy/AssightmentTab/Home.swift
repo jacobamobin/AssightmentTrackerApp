@@ -12,7 +12,7 @@ struct Home: View {
     
     @Environment(\.modelContext) private var context
     
-    @Query private var items: [Event]
+    @Query private var events: [Event]
     
     var body: some View {
         NavigationStack {
@@ -29,9 +29,12 @@ struct Home: View {
                         addItem()
                     }
                     
-                    List {
-                        ForEach(items) { item in
-                            Text(item.name)
+                    ScrollView {
+                        ForEach(events) { item in
+                            Item(eventTitle: item.className, eventDate: item.dueDate,
+                                 className: item.className,
+                                 eventColor: Color.blue,
+                                 type: item.type)
                         }
                     }
                 }
@@ -43,7 +46,7 @@ struct Home: View {
         
     func addItem() {
             
-        let item = Event(name: "Test Item")
+        let item = Event(name: "Test Item", dueDate: Date(), type: 0, className: "Test Class", isCompleted: false)
         context.insert(item)
         
     }
