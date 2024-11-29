@@ -22,12 +22,13 @@ struct Home: View {
                 VStack {
                     HomeHeader(selectedClass: $selectedClass)
                     
-                    Stats()
-                    
-                    ClassSelector(selectedClass: $selectedClass)
-                    
-                    VStack {
-                        ScrollView {
+                    ScrollView {
+                        Stats()
+                        
+                        ClassSelector(selectedClass: $selectedClass)
+                        
+                        VStack {
+                            //ScrollView {
                             ForEach(events) { item in
                                 // Filter the events based on the selected class
                                 if let selectedClass = selectedClass {
@@ -40,7 +41,15 @@ struct Home: View {
                                     eventItemView(for: item)
                                 }
                             }
+                            //}
                         }
+                        
+                        Spacer()
+                        
+                        GithubPromo()
+                            .padding(.top, 10)
+                        DonationPromo()
+                            .padding(.top, 10)
                     }
                     
                 }.padding(5)
