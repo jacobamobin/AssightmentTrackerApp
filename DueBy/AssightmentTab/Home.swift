@@ -26,11 +26,6 @@ struct Home: View {
                     ClassSelector()
                     
                     VStack {
-                        Text("Add events")
-                        Button("add an item") {
-                            addItem()
-                        }
-                        
                         ScrollView {
                             ForEach(events) { item in
                                 // Ensure eventColor is correctly derived from classes
