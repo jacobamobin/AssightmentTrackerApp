@@ -5,15 +5,13 @@
 //  Created by Jacob Mobin on 2024-11-27.
 //
 import SwiftUI
+import SwiftData
 
 struct ClassSelector: View {
-    var classes: [String: Color] = [
-        "MTH110": .blue,
-        "CPS213": .green,
-        "CPS109": .yellow,
-        "PCS110": .purple,
-        "DST300": .red
-    ]
+    
+    @Query var classes: [Classes]
+
+    // Example color dictionary (update according to your needs)
     var colorDictionary: [Color: Color] = [
         .red: .orange,
         .orange: .yellow,
@@ -32,8 +30,8 @@ struct ClassSelector: View {
     // Helper Function to Get Fill Color
     private func fillColor(for className: String) -> AnyShapeStyle {
         if selectedClass == className {
-            let baseColor = classes[className] ?? .gray
-            let secondaryColor = colorDictionary[baseColor] ?? .gray
+            let baseColor = convertColorString(className)
+            let secondaryColor = colorDictionary[convertColorString(className)] ?? .gray
             return AnyShapeStyle(
                 LinearGradient(
                     colors: [baseColor, secondaryColor.opacity(0.8)],
@@ -45,6 +43,7 @@ struct ClassSelector: View {
             return AnyShapeStyle(.gray.opacity(0.8))
         }
     }
+
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -63,20 +62,20 @@ struct ClassSelector: View {
                 }
                 
                 // Class Tickers
-                ForEach(classes.keys.sorted(), id: \.self) { className in
+                ForEach(classes, id: \.self) { classItem in
                     Button {
-                        selectedClass = (selectedClass == className) ? nil : className
+                        selectedClass = (selectedClass == classItem.name) ? nil : classItem.name
                     } label: {
-                        Text(className)
+                        Text(classItem.name)
                             .font(.headline)
                             .foregroundColor(.white)
                             .padding(10)
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
-                                    .fill(fillColor(for: className))
+                                    .fill(fillColor(for: classItem.name))
                             )
                             .animation(.default, value: selectedClass)
-                            .accessibilityLabel("Select \(className)")
+                            .accessibilityLabel("Select \(classItem.name)")
                     }
                 }
             }
