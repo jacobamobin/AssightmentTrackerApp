@@ -16,27 +16,28 @@ struct EventEditor: View {
     @Query private var events: [Event]
     @Query private var classes: [Classes]
     
-    @State private var eventTitle: String = ""
-    @State private var eventDate: Date = .now
+    @State private var eventTitle: String
+    @State private var eventDate: Date
     @State private var className: String = ""
-    @State private var eventColor: Color = .gray
-    @State private var eventType: Int = 1
+    @State private var eventColor: Color
+    @State private var eventType: Int
+    
+    // Pass the event into the editor and initialize state properties
+    init(event: Event) {
+        _eventTitle = State(initialValue: event.name)
+        _eventDate = State(initialValue: event.dueDate)
+        _className = State(initialValue: event.className)
+        _eventColor = State(initialValue: Color.gray) // Customize this to set the color properly
+        _eventType = State(initialValue: event.type)
+    }
     
     var body: some View {
         NavigationStack {
             Form {
                 TextField("Event Title", text: $eventTitle)
-                DatePicker("Event Date", selection: $eventDate, displayedComponents: .date)
-                Picker("Class Name", selection: $className) {
-                    ForEach(classes, id: \.self) { item in
-                        Text(item.name).tag(item.name)
-                    }
-                }
-                
                 
                 Picker("Event Type", selection: $eventType) {
-                    
-                    Text("Assightment").tag(1)
+                    Text("Assignment").tag(1)
                     Text("Homework").tag(2)
                     Text("Culminating").tag(3)
                     Text("Lab").tag(4)
@@ -47,17 +48,29 @@ struct EventEditor: View {
                     Text("Test").tag(9)
                     Text("Midterm").tag(10)
                     Text("Exam").tag(11)
-                    
                 }
-                //ColorPicker("Event Color", selection: $eventColor)
+                
+                DatePicker("Event Date", selection: $eventDate, displayedComponents: .date)
+                Picker("Class Name", selection: $className) {
+                    ForEach(classes, id: \.self) { item in
+                        Text(item.name).tag(item.name)
+                    }
+                }
+                
             }
             .navigationTitle("Edit Work")
             .toolbar {
                 Button("Save") {
-                    let item = Event(name: eventTitle, dueDate: eventDate, type: eventType, className: className, isCompleted: false)
-                    context.insert(item)
+                    // Find the event to update and save the changes
+                    if let eventToUpdate = events.first(where: { $0.id == eventTitle }) {
+                        eventToUpdate.name = eventTitle
+                        eventToUpdate.dueDate = eventDate
+                        eventToUpdate.className = className
+                        eventToUpdate.type = eventType
+                        // Add any other properties to update
+                        try? context.save() // Save the context
+                    }
                     dismiss()
-
                 }
             }
         }
@@ -65,5 +78,5 @@ struct EventEditor: View {
 }
 
 #Preview {
-    EventEditor()
+    EventEditor(event: Event(name: "Sample Event", dueDate: Date(), type: 0, className: "Sample Class", isCompleted: false))
 }

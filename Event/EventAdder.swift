@@ -26,14 +26,6 @@ struct EventAdder: View {
         NavigationStack {
             Form {
                 TextField("Event Title", text: $eventTitle)
-                DatePicker("Event Date", selection: $eventDate, displayedComponents: .date)
-                Picker("Class Name", selection: $className) {
-                    ForEach(classes, id: \.self) { item in
-                        Text(item.name).tag(item.name)
-                    }
-                }
-                
-                
                 Picker("Event Type", selection: $eventType) {
                     
                     Text("Assightment").tag(1)
@@ -49,6 +41,15 @@ struct EventAdder: View {
                     Text("Exam").tag(11)
                     
                 }
+                DatePicker("Event Date", selection: $eventDate, displayedComponents: .date)
+                Picker("Class Name", selection: $className) {
+                    ForEach(classes, id: \.self) { item in
+                        Text(item.name).tag(item.name)
+                    }
+                }
+                
+                
+                
                 //ColorPicker("Event Color", selection: $eventColor)
             }
             .navigationTitle("Add Work")

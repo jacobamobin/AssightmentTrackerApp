@@ -102,7 +102,10 @@ struct Home: View {
     
     // Edit an Event (navigate to an edit view or perform inline editing)
     func editItem(_ item: Event) {
-        
+        // Navigate to the EventEditor and pass the selected event
+        NavigationLink(destination: EventEditor(event: item)) {
+            EmptyView()
+        }
     }
 }
 
