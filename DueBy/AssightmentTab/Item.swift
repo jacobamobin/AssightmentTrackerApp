@@ -69,10 +69,10 @@ struct Item: View {
                 .padding(8)
                 //.foregroundColor(eventColor.opacity(0.5))
                 .foregroundStyle(
-                                colorScheme == .dark
-                                    ? fillColor(for: className).opacity(0.4)
-                                    : fillColor(for: className).opacity(0.85)
-                            )
+                    colorScheme == .dark
+                        ? fillColor(for: className).opacity(0.4)
+                        : fillColor(for: className).opacity(0.85)
+                )
                 .shadow(radius: 4)
             
             HStack {
