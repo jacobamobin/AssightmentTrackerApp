@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
 func convertColorString(_ colorString: String) -> Color {
     switch colorString.lowercased() {

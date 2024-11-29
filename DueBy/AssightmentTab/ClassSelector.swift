@@ -25,13 +25,29 @@ struct ClassSelector: View {
         .gray: .gray
     ]
     
+    func convertColorString(_ colorString: String) -> Color {
+        switch colorString.lowercased() {
+        case "red": return .red
+        case "orange": return .orange
+        case "yellow": return .yellow
+        case "green": return .green
+        case "teal": return .teal
+        case "blue": return .blue
+        case "indigo": return .indigo
+        case "purple": return .purple
+        case "pink": return .pink
+        case "gray", "grey": return .gray
+        default: return .gray // Default fallback color
+        }
+    }
+    
     @State private var selectedClass: String?
 
     // Helper Function to Get Fill Color
-    private func fillColor(for className: String) -> AnyShapeStyle {
+    private func fillColor(for className: String, classColor: String) -> AnyShapeStyle {
         if selectedClass == className {
-            let baseColor = convertColorString(className)
-            let secondaryColor = colorDictionary[convertColorString(className)] ?? .gray
+            let baseColor = convertColorString(classColor.lowercased())
+            let secondaryColor = colorDictionary[baseColor] ?? .gray
             return AnyShapeStyle(
                 LinearGradient(
                     colors: [baseColor, secondaryColor.opacity(0.8)],
@@ -40,9 +56,10 @@ struct ClassSelector: View {
                 )
             )
         } else {
-            return AnyShapeStyle(.gray.opacity(0.8))
+            return AnyShapeStyle(.gray.opacity(0.8)) // Default fill for unselected classes
         }
     }
+
 
 
     var body: some View {
@@ -72,7 +89,7 @@ struct ClassSelector: View {
                             .padding(10)
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
-                                    .fill(fillColor(for: classItem.name))
+                                    .fill(fillColor(for: classItem.name, classItem.color))
                             )
                             .animation(.default, value: selectedClass)
                             .accessibilityLabel("Select \(classItem.name)")

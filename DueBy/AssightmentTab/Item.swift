@@ -64,7 +64,7 @@ struct Item: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 4) // Background Rect
-                .frame(width: .infinity, height: 80)
+                .frame(height: 80)
                 .padding(8)
                 .foregroundStyle(
                     colorScheme == .dark
