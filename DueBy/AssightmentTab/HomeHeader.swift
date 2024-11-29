@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct HomeHeader: View {
+    
+    @Binding var selectedClass: String?
+    
     var body: some View {
             VStack(alignment: .leading, spacing: 20) {
                 HStack {
@@ -19,7 +22,7 @@ struct HomeHeader: View {
                     Spacer()
                     
                     
-                    NavigationLink(destination: Search()) {
+                    NavigationLink(destination: Search(selectedClass: $selectedClass)) {
                         Image(systemName: "magnifyingglass")
                             .font(.largeTitle)
                             .fontWeight(.bold)
@@ -38,5 +41,5 @@ struct HomeHeader: View {
 }
 
 #Preview {
-    HomeHeader()
+    HomeHeader(selectedClass: .constant("MTH110"))
 }

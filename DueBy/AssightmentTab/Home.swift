@@ -4,7 +4,6 @@
 //
 //  Created by Jacob Mobin on 2024-11-27.
 //
-
 import SwiftUI
 import SwiftData
 
@@ -15,23 +14,31 @@ struct Home: View {
     @Query private var events: [Event]
     @Query private var classes: [Classes]
     
+    @State private var selectedClass: String? = nil
+    
     var body: some View {
         NavigationStack {
             ZStack {
                 VStack {
-                    HomeHeader()
+                    HomeHeader(selectedClass: $selectedClass)
                     
                     Stats()
                     
-                    ClassSelector()
+                    ClassSelector(selectedClass: $selectedClass)
                     
                     VStack {
                         ScrollView {
                             ForEach(events) { item in
-                                // Ensure eventColor is correctly derived from classes
-                                Item(eventTitle: item.className, eventDate: item.dueDate,
-                                     className: item.className,
-                                     type: item.type)
+                                // Filter the events based on the selected class
+                                if let selectedClass = selectedClass {
+                                    // Show only events that match the selected class
+                                    if item.className == selectedClass {
+                                        eventItemView(for: item)
+                                    }
+                                } else {
+                                    // Show all events if no class is selected
+                                    eventItemView(for: item)
+                                }
                             }
                         }
                     }
@@ -52,6 +59,27 @@ struct Home: View {
         }
     }
     
+    // Helper function to generate the event item view
+    private func eventItemView(for item: Event) -> some View {
+        Item(eventTitle: item.name,
+             eventDate: item.dueDate,
+             className: item.className,
+             type: item.type)
+        .contextMenu {
+            Button(role: .destructive) {
+                deleteItem(item)
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
+            
+            Button {
+                editItem(item)
+            } label: {
+                Label("Edit", systemImage: "pencil")
+            }
+        }
+    }
+    
     // Helper function to determine the event color based on the className
     private func eventColor(for className: String) -> Color {
         // Find the class with the given name
@@ -61,14 +89,25 @@ struct Home: View {
         return .gray // Default if class not found
     }
     
+    // Add a new Event (for demonstration purposes)
     func addItem() {
-        // Create a new Event object
         let item = Event(name: "Test Item", dueDate: Date(), type: 0, className: "Test Class", isCompleted: false)
-        context.insert(item) // Insert into model context
+        context.insert(item)
+    }
+    
+    // Delete an Event
+    func deleteItem(_ item: Event) {
+        context.delete(item)
+    }
+    
+    // Edit an Event (navigate to an edit view or perform inline editing)
+    func editItem(_ item: Event) {
+        
     }
 }
 
 #Preview {
     Home()
 }
+
 

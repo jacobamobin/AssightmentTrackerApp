@@ -9,6 +9,8 @@ import SwiftUI
 
 struct Search: View {
     
+    @Binding var selectedClass: String?
+    
     @State public var searchText: String = ""
     @State public var showExpired: Bool = false
     
@@ -22,7 +24,7 @@ struct Search: View {
             .padding(.horizontal)
             .padding(.vertical, 7)
         
-        ClassSelector()
+        ClassSelector(selectedClass: $selectedClass)
         
         // Toggle for "Show Expired"
         Toggle(isOn: $showExpired) {
@@ -36,5 +38,5 @@ struct Search: View {
 }
 
 #Preview {
-    Search()
+    Search(selectedClass: .constant("MTH110"))
 }

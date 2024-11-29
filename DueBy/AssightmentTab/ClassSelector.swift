@@ -10,21 +10,24 @@ import SwiftData
 struct ClassSelector: View {
     
     @Query var classes: [Classes]
-
-    // Example color dictionary (update according to your needs)
-    var colorDictionary: [Color: Color] = [
-        .red: .orange,
-        .orange: .yellow,
-        .yellow: .green,
-        .green: .teal,
-        .teal: .blue,
-        .blue: .indigo,
-        .indigo: .purple,
-        .purple: .pink,
-        .pink: .red,
-        .gray: .gray
+    
+    // Updated color dictionary using strings as keys
+    var colorDictionary: [String: Color] = [
+        "red": .orange,
+        "orange": .yellow,
+        "yellow": .green,
+        "green": .teal,
+        "teal": .blue,
+        "blue": .indigo,
+        "indigo": .purple,
+        "purple": .pink,
+        "pink": .red,
+        "gray": .gray
     ]
     
+    @Binding var selectedClass: String? 
+    @State private var precomputedStyles: [String: AnyShapeStyle] = [:]
+
     func convertColorString(_ colorString: String) -> Color {
         switch colorString.lowercased() {
         case "red": return .red
@@ -40,28 +43,23 @@ struct ClassSelector: View {
         default: return .gray // Default fallback color
         }
     }
-    
-    @State private var selectedClass: String?
 
-    // Helper Function to Get Fill Color
-    private func fillColor(for className: String, classColor: String) -> AnyShapeStyle {
-        if selectedClass == className {
-            let baseColor = convertColorString(classColor.lowercased())
-            let secondaryColor = colorDictionary[baseColor] ?? .gray
-            return AnyShapeStyle(
+    // Precompute the gradient styles for all classes
+    private func computeStyles() {
+        precomputedStyles = classes.reduce(into: [:]) { result, classItem in
+            let baseColor = convertColorString(classItem.colorString.lowercased())
+            let secondaryColor = colorDictionary[classItem.colorString.lowercased()] ?? .gray
+            let gradientStyle = AnyShapeStyle(
                 LinearGradient(
                     colors: [baseColor, secondaryColor.opacity(0.8)],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
             )
-        } else {
-            return AnyShapeStyle(.gray.opacity(0.8)) // Default fill for unselected classes
+            result[classItem.name] = gradientStyle
         }
     }
-
-
-
+    
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 15) {
@@ -89,7 +87,10 @@ struct ClassSelector: View {
                             .padding(10)
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
-                                    .fill(fillColor(for: classItem.name, classItem.color))
+                                    .fill(selectedClass == classItem.name
+                                          ? precomputedStyles[classItem.name] ?? AnyShapeStyle(.gray)
+                                          : AnyShapeStyle(.gray.opacity(0.8))
+                                    )
                             )
                             .animation(.default, value: selectedClass)
                             .accessibilityLabel("Select \(classItem.name)")
@@ -97,12 +98,13 @@ struct ClassSelector: View {
                 }
             }
             .padding(.horizontal)
+            .onAppear {
+                computeStyles() // Precompute styles when the view appears
+            }
+            .onChange(of: classes) { _ in
+                computeStyles() // Recompute styles when classes change
+            }
         }
     }
-}
-
-// Preview
-#Preview {
-    ClassSelector()
 }
 

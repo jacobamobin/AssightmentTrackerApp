@@ -11,7 +11,10 @@ import SwiftData
 struct Item: View {
     
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.modelContext) private var context
     @Query var classes: [Classes]  // Query to fetch all classes
+    @Query var events: [Event]
+    
     
     var eventTitle: String
     var eventDate: Date
