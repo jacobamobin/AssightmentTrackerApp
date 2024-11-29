@@ -6,32 +6,24 @@
 //
 
 import SwiftUI
-
+import SwiftData
 
 struct Item: View {
     
     @Environment(\.colorScheme) var colorScheme
+    @Query var classes: [Classes]  // Query to fetch all classes
     
     var eventTitle: String
     var eventDate: Date
     var className: String
     var type: Int
         
-    init(eventTitle: String, eventDate: Date, className: String, eventColor: Color, type: Int) {
+    init(eventTitle: String, eventDate: Date, className: String, type: Int) {
         self.eventTitle = eventTitle
         self.eventDate = eventDate
         self.className = className
         self.type = type
     }
-    
-    var classes: [String: Color] = [
-        "MTH110": .blue,
-        "CPS213": .green,
-        "CPS109": .yellow,
-        "PCS110": .purple,
-        "DST300": .red
-    ]
-    
     
     var colorDictionary: [Color: Color] = [
         .red: .orange,
@@ -47,27 +39,33 @@ struct Item: View {
     ]
     
     private func fillColor(for className: String) -> LinearGradient {
-        let baseColor = classes[className] ?? .gray
-        let secondaryColor = colorDictionary[baseColor] ?? .gray
-        
-        // Return the LinearGradient directly
-        return LinearGradient(
-            colors: [baseColor, secondaryColor],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
+        // Find the class object from the classes array by class name
+        if let classObject = classes.first(where: { $0.name == className }) {
+            let baseColor = convertColorString(classObject.colorString) // Convert colorString to Color
+            let secondaryColor = colorDictionary[baseColor] ?? .gray
+            
+            return LinearGradient(
+                colors: [baseColor, secondaryColor],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        }
+        return LinearGradient(colors: [.gray, .gray], startPoint: .topLeading, endPoint: .bottomTrailing)  // Fallback
     }
     
     private func eventColor() -> Color {
-        return classes[className] ?? .gray
+        // Find the class object and convert colorString to Color
+        if let classObject = classes.first(where: { $0.name == className }) {
+            return convertColorString(classObject.colorString)
+        }
+        return .gray // Default if class not found
     }
     
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 4) //Background Rect
+            RoundedRectangle(cornerRadius: 4) // Background Rect
                 .frame(width: .infinity, height: 80)
                 .padding(8)
-                //.foregroundColor(eventColor.opacity(0.5))
                 .foregroundStyle(
                     colorScheme == .dark
                         ? fillColor(for: className).opacity(0.4)
@@ -100,7 +98,6 @@ struct Item: View {
                     
                 }
                 
-                
                 Spacer()
                 
                 VStack(alignment: .trailing) {
@@ -118,28 +115,12 @@ struct Item: View {
                         .foregroundColor(.white.opacity(0.8))
                     
                 }.padding(.trailing, 5)
-                
-                    
             }.padding()
         }
-        
     }
 }
 
-
-//Types
-//1) Assightment
-//2) Homework
-//3) Culminating
-//4) Lab
-//4) Essay
-//5) Project
-//6) Presentation
-//7) Quiz
-//8) Test
-//9) Midterm
-//10) Exam
-
+// TypeText function unchanged
 func TypeText(_ type: Int) -> (String, String) {
     switch type {
     case 1:
@@ -170,6 +151,6 @@ func TypeText(_ type: Int) -> (String, String) {
 }
 
 #Preview {
-    Item(eventTitle: "Culminating", eventDate: Date(), className: "PCS110", eventColor: .blue, type: 6)
-
+    Item(eventTitle: "Culminating", eventDate: Date(), className: "PCS110", type: 6)
 }
+
