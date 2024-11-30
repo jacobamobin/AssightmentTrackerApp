@@ -65,7 +65,10 @@ struct SettingsView: View {
             Section {
                 GithubPromo()
                 DonationPromo()
-            }
+            }.background(Color.clear)
+                .listRowBackground(Color.clear)
+                .listRowInsets(.none)
+                .frame(minWidth: 360, maxWidth: .infinity)
             
             
             
