@@ -27,8 +27,7 @@ struct Home: View {
                         
                         ClassSelector(selectedClass: $selectedClass)
                         
-                        VStack {
-                            //ScrollView {
+                        VStack(spacing: 2) {
                             ForEach(events) { item in
                                 // Filter the events based on the selected class
                                 if let selectedClass = selectedClass {
@@ -41,7 +40,6 @@ struct Home: View {
                                     eventItemView(for: item)
                                 }
                             }
-                            //}
                         }
                         
                         Spacer()

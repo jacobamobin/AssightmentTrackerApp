@@ -41,6 +41,22 @@ struct Item: View {
         .gray: .gray
     ]
     
+    var timeRemainingText: String {
+        let now = Date()
+        let difference = Calendar.current.dateComponents([.day, .hour, .minute], from: now, to: eventDate)
+        
+        if let days = difference.day, days > 0 {
+            return "In \(days) Days"
+        } else if let hours = difference.hour, hours > 0 {
+            return "In \(hours) Hours"
+        } else if let minutes = difference.minute, minutes > 0 {
+            return "In \(minutes) Minutes"
+        } else {
+            return "Overdue"
+        }
+    }
+    
+    
     private func fillColor(for className: String) -> LinearGradient {
         // Find the class object from the classes array by class name
         if let classObject = classes.first(where: { $0.name == className }) {
@@ -104,7 +120,7 @@ struct Item: View {
                 Spacer()
                 
                 VStack(alignment: .trailing) {
-                    Text("In 3 Days")
+                    Text(timeRemainingText)
                         .font(.title2)
                         .fontWeight(.bold)
                         .foregroundColor(.white)
