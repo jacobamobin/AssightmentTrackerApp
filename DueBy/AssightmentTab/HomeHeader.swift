@@ -12,7 +12,7 @@ struct HomeHeader: View {
     @Binding var selectedClass: String?
     
     var body: some View {
-            VStack(alignment: .leading, spacing: 20) {
+            VStack(spacing: 20) {
                 HStack {
                     Text("Assightments")
                         .font(.largeTitle)
@@ -24,7 +24,7 @@ struct HomeHeader: View {
                     
                     NavigationLink(destination: Search(selectedClass: $selectedClass)) {
                         Image(systemName: "magnifyingglass")
-                            .font(.largeTitle)
+                            .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(.primary)
                     }
@@ -34,7 +34,7 @@ struct HomeHeader: View {
                 .padding(.horizontal)
                 
             }
-            .padding(.top, 20)
+            
         
     }
         

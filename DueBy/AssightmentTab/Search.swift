@@ -28,7 +28,7 @@ struct Search: View {
         
         // Toggle for "Show Expired"
         Toggle(isOn: $showExpired) {
-            Text("Show Finished")
+            Text("Show Completed Work")
                 .font(.body)
         }
         .padding(.horizontal)
