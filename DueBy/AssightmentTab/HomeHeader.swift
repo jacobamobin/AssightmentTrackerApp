@@ -22,8 +22,16 @@ struct HomeHeader: View {
                     Spacer()
                     
                     
+                    
                     NavigationLink(destination: Search(selectedClass: $selectedClass)) {
                         Image(systemName: "magnifyingglass")
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .foregroundColor(.primary)
+                    }
+                    
+                    NavigationLink(destination: SettingsView()) {
+                        Image(systemName: "gear")
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(.primary)

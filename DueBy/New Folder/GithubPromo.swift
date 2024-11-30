@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct GithubPromo: View {
+    @Environment(\.colorScheme) var colorScheme
     var body: some View {
         ZStack {
             // Background with rounded corners
             RoundedRectangle(cornerRadius: 22)
-                .foregroundStyle(.white.opacity(0.15))
+                .foregroundStyle(colorScheme == .dark
+                                 ? .white.opacity(0.15)
+                                 : .black.opacity(0.8))
+            
                 .frame(height: 130)
                 .shadow(radius: 10, x: 5, y: 5)
             

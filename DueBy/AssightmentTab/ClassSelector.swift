@@ -65,7 +65,7 @@ struct ClassSelector: View {
             HStack(spacing: 15) {
                 // Settings Wheel
                 NavigationLink(destination: ClassSettings()) {
-                    Image(systemName: "gearshape")
+                    Image(systemName: "pencil.circle")
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding(10)
@@ -73,7 +73,7 @@ struct ClassSelector: View {
                             RoundedRectangle(cornerRadius: 10)
                                 .fill(.gray.opacity(0.7))
                         )
-                        .accessibilityLabel("Settings")
+                        .accessibilityLabel("Manage Classes")
                 }
                 
                 // Class Tickers
@@ -107,4 +107,5 @@ struct ClassSelector: View {
         }
     }
 }
+
 
