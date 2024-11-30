@@ -24,6 +24,9 @@ struct EventAdder: View {
     
     var body: some View {
         NavigationStack {
+            Item(eventTitle: eventTitle, eventDate: eventDate, className: className, type: eventType)
+            
+            
             Form {
                 TextField("Event Title", text: $eventTitle)
                 Picker("Event Type", selection: $eventType) {
