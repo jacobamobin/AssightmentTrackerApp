@@ -71,7 +71,9 @@ struct Home: View {
         Item(eventTitle: item.name,
              eventDate: item.dueDate,
              className: item.className,
-             type: item.type)
+             type: item.type,
+             isCompleted: item.isCompleted
+        )
         .contextMenu {
             Button(role: .destructive) {
                 deleteItem(item)

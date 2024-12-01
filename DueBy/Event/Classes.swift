@@ -16,7 +16,6 @@ class Classes: Identifiable {
     var name: String
     var colorString: String
     
-    
     init(name: String, colorString: String) {
         self.id = UUID().uuidString
         self.name = name

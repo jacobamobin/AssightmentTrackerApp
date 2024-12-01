@@ -10,24 +10,28 @@ import SwiftData
 
 struct Item: View {
     
-    @Environment(\.colorScheme) var colorScheme
-    @Environment(\.modelContext) private var context
-    @Query var classes: [Classes]  // Query to fetch all classes
+    //Enviorment Variables and Model Context
+    @Environment(\.colorScheme) var colorScheme //Device Color Theme
+    @Environment(\.modelContext) private var context //Model
+    @Query var classes: [Classes]
     @Query var events: [Event]
     
-    
-    var eventTitle: String
-    var eventDate: Date
-    var className: String
-    var type: Int
+    var eventTitle: String  //The Name of the event
+    var eventDate: Date     //The Due Date of the event
+    var className: String   //The Class associated with the event (For color)
+    var type: Int           //The Type of Assightment
+    var isCompleted: Bool   //If Assightment is completed
         
-    init(eventTitle: String, eventDate: Date, className: String, type: Int) {
+    //Init
+    init(eventTitle: String, eventDate: Date, className: String, type: Int, isCompleted: Bool) {
         self.eventTitle = eventTitle
         self.eventDate = eventDate
         self.className = className
         self.type = type
+        self.isCompleted = false
     }
     
+    //Color Dictonary used for Gradient
     var colorDictionary: [Color: Color] = [
         .red: .orange,
         .orange: .yellow,
@@ -41,43 +45,25 @@ struct Item: View {
         .gray: .gray
     ]
     
+    //Calculates the Time Remaining, if completed show completed
     var timeRemainingText: String {
         let now = Date()
         let difference = Calendar.current.dateComponents([.day, .hour, .minute], from: now, to: eventDate)
         
-        if let days = difference.day, days > 0 {
-            return "In \(days) Days"
-        } else if let hours = difference.hour, hours > 0 {
-            return "In \(hours) Hours"
-        } else if let minutes = difference.minute, minutes > 0 {
-            return "In \(minutes) Minutes"
+        if !isCompleted {
+            if let days = difference.day, days > 0 {
+                return "In \(days) Days"
+            } else if let hours = difference.hour, hours > 0 {
+                return "In \(hours) Hours"
+            } else if let minutes = difference.minute, minutes > 0 {
+                return "In \(minutes) Minutes"
+            } else {
+                return "Overdue"
+            }
         } else {
-            return "Overdue"
+            return "Completed"
         }
-    }
-    
-    
-    private func fillColor(for className: String) -> LinearGradient {
-        // Find the class object from the classes array by class name
-        if let classObject = classes.first(where: { $0.name == className }) {
-            let baseColor = convertColorString(classObject.colorString) // Convert colorString to Color
-            let secondaryColor = colorDictionary[baseColor] ?? .gray
-            
-            return LinearGradient(
-                colors: [baseColor, secondaryColor],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-        }
-        return LinearGradient(colors: [.gray, .gray], startPoint: .topLeading, endPoint: .bottomTrailing)  // Fallback
-    }
-    
-    private func eventColor() -> Color {
-        // Find the class object and convert colorString to Color
-        if let classObject = classes.first(where: { $0.name == className }) {
-            return convertColorString(classObject.colorString)
-        }
-        return .gray // Default if class not found
+        
     }
     
     var body: some View {
@@ -137,9 +123,34 @@ struct Item: View {
             }.padding()
         }
     }
+    
+    private func fillColor(for className: String) -> LinearGradient {
+        // Find the class object from the classes array by class name
+        if let classObject = classes.first(where: { $0.name == className }) {
+            let baseColor = convertColorString(classObject.colorString) // Convert colorString to Color
+            let secondaryColor = colorDictionary[baseColor] ?? .gray
+            
+            return LinearGradient(
+                colors: [baseColor, secondaryColor],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        }
+        return LinearGradient(colors: [.gray, .gray], startPoint: .topLeading, endPoint: .bottomTrailing)  // Fallback
+    }
+
+    //Handler for convering the classes colorString to a SwiftUI Color
+    //This is because SwiftData cannot handle SwiftUi Colors
+    private func eventColor() -> Color {
+        // Find the class object and convert colorString to Color
+        if let classObject = classes.first(where: { $0.name == className }) {
+            return convertColorString(classObject.colorString)
+        }
+        return .gray // Default if class not found
+    }
 }
 
-// TypeText function unchanged
+//This is for the Assightment Types, each Work type is assisgned a SF Symbol
 func TypeText(_ type: Int) -> (String, String) {
     switch type {
     case 1:
@@ -169,7 +180,8 @@ func TypeText(_ type: Int) -> (String, String) {
     }
 }
 
+
 #Preview {
-    Item(eventTitle: "Culminating", eventDate: Date(), className: "PCS110", type: 6)
+    Item(eventTitle: "Culminating", eventDate: Date(), className: "PCS110", type: 6, isCompleted: false)
 }
 

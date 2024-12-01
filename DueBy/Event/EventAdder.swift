@@ -24,7 +24,7 @@ struct EventAdder: View {
     
     var body: some View {
         NavigationStack {
-            Item(eventTitle: eventTitle, eventDate: eventDate, className: className, type: eventType)
+            Item(eventTitle: eventTitle, eventDate: eventDate, className: className, type: eventType, isCompleted: false)
             
             
             Form {
