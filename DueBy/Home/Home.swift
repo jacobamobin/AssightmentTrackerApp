@@ -44,8 +44,6 @@ struct Home: View {
                         
                         Spacer()
                         
-                        //GithubPromo()
-                            //.padding(.top, 10)
                         DonationPromo()
                             .padding(.top, 10)
                     }
@@ -61,7 +59,7 @@ struct Home: View {
                         }
                     }.padding(5)
                 }.padding(5)
-                
+            
             }
         }
     }
