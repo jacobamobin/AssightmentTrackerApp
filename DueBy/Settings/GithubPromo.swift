@@ -22,20 +22,24 @@ struct GithubPromo: View {
             
             VStack {
                 // Upper section with text
-                VStack(alignment: .leading) {
-                    Text("This App is Open Source")
-                        .font(.title2)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.white)
-                    
-                    Text("Check it out on GitHub")
-                        .font(.subheadline)
-                        .foregroundColor(.white.opacity(0.7))
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("This App is Open Source")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                        
+                        Text("Check it out on GitHub")
+                            .font(.subheadline)
+                            .foregroundColor(.white.opacity(0.7))
+                    }
+                    .padding(.top, 20)
+                    .padding(.leading, 15)
+                    Spacer()
                 }
-                .padding(.top, 20)
-                .padding(.leading, -110)
                 
-                Spacer()
+                
+                
                 
                 // Lower section with the GitHub logo and star
                 HStack {
