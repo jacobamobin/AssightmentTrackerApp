@@ -46,9 +46,15 @@ struct Home: View {
                     Spacer()
                     HStack(alignment: .bottom) {
                         Spacer()
-                        NavigationLink(destination: EventAdder()) {
-                            AddButton()
+                        VStack (spacing: -15){
+                            NavigationLink(destination: EventAdderMic()) {
+                                AddByMicrophone()
+                            }
+                            NavigationLink(destination: EventAdder()) {
+                                AddButton()
+                            }
                         }
+                        
                     }
                     .padding(5)
                 }
