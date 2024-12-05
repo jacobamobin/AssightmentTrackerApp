@@ -37,6 +37,7 @@ struct Home: View {
                         
                         DonationPromo()
                             .padding(.top, 10)
+                            .padding(.bottom, 20)
                     }
                 }
                 .padding(5)
