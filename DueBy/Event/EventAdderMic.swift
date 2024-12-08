@@ -28,6 +28,8 @@ struct EventAdderMic: View {
             
         }
     }
+    
+    
 }
 
 #Preview {

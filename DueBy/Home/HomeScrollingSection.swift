@@ -20,10 +20,26 @@ struct HomeScrollingSection: View {
     
     var body: some View {
         VStack(spacing: 5) {
-            ForEach(events) { item in
-                // Filter the events based on the selected class
-                if selectedClass == nil || item.className == selectedClass {
-                    eventItemView(for: item)
+            // Group and sort events into the defined categories
+            let groupedEvents = groupEvents(events)
+            
+            ForEach(["Overdue", "Today", "Soon", "Upcoming"], id: \.self) { category in
+                if let items = groupedEvents[category], !items.isEmpty {
+                    
+                    HStack {
+                        Text(category)
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .foregroundStyle(category == "Overdue" ? .red : .gray)
+                        Spacer()
+                    }.padding(.leading, 10)
+                    
+                    ForEach(items) { item in
+                        if selectedClass == nil || item.className == selectedClass {
+                            eventItemView(for: item)
+                        }
+                    }
+                    
                 }
             }
         }
@@ -41,17 +57,23 @@ struct HomeScrollingSection: View {
             isCompleted: item.isCompleted
         )
         .contextMenu {
+            Button {
+                completeItem(item)
+            } label: {
+                Label("Complete", systemImage: "checkmark.circle")
+            }
+            Button {
+                editItem(item)
+            } label: {
+                Label("Edit", systemImage: "pencil")
+            }
             Button(role: .destructive) {
                 deleteItem(item)
             } label: {
                 Label("Delete", systemImage: "trash")
             }
             
-            Button {
-                editItem(item)
-            } label: {
-                Label("Edit", systemImage: "pencil")
-            }
+            
         }
     }
     
@@ -63,11 +85,52 @@ struct HomeScrollingSection: View {
         eventToEdit = item
     }
     
+    private func completeItem(_ item: Event) {
+        item.isCompleted = true
+        try? context.save()
+    }
+    
     private func eventColor(for className: String) -> Color {
         if let classObject = classes.first(where: { $0.name == className }) {
             return convertColorString(classObject.colorString)
         }
         return .gray
+    }
+    
+    private func groupEvents(_ events: [Event]) -> [String: [Event]] {
+        let now = Date()
+        let calendar = Calendar.current
+        
+        // Define date ranges for each category
+        let startOfToday = calendar.startOfDay(for: now)
+        let endOfToday = calendar.date(byAdding: .day, value: 1, to: startOfToday)!
+        let endOfSoon = calendar.date(byAdding: .hour, value: 72, to: now)!
+        
+        var grouped: [String: [Event]] = [
+            "Overdue": [],
+            "Today": [],
+            "Next 3 Days": [],
+            "Upcoming": []
+        ]
+        
+        for event in events {
+            if event.dueDate < now {
+                grouped["Overdue"]?.append(event)
+            } else if event.dueDate < endOfToday {
+                grouped["Today"]?.append(event)
+            } else if event.dueDate < endOfSoon {
+                grouped["Soon"]?.append(event)
+            } else {
+                grouped["Upcoming"]?.append(event)
+            }
+        }
+        
+        // Sort events in each category by due date
+        for category in grouped.keys {
+            grouped[category]?.sort { $0.dueDate < $1.dueDate }
+        }
+        
+        return grouped
     }
 }
 
