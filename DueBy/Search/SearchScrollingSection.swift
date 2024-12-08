@@ -1,19 +1,20 @@
 //
-//  HomeScrollingSection.swift
+//  SearchScrollingSection.swift
 //  DueBy
 //
-//  Created by Jacob Mobin on 2024-12-01.
+//  Created by Jacob Mobin on 2024-12-08.
 //
 
 import SwiftUI
 import SwiftData
 
-struct HomeScrollingSection: View {
+struct SearchScrollingSection: View {
     @Environment(\.modelContext) private var context
     
     var events: [Event]
     var classes: [Classes]
     @Binding var selectedClass: String?
+    @State private var showCompleted: Bool = false
     
     @State private var isEditing: Bool = false
     @State private var eventToEdit: Event? = nil
@@ -23,21 +24,20 @@ struct HomeScrollingSection: View {
             // Group and sort events into the defined categories
             let groupedEvents = groupEvents(events)
             
-            ForEach(["Overdue", "Today", "Soon", "Upcoming"], id: \.self) { category in
+            ForEach(["Overdue", "Today", "Soon", "Upcoming", "Completed"], id: \.self) { category in
                 if let items = groupedEvents[category], !items.isEmpty {
                     
-                    HStack {
-                        Text(category)
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .foregroundStyle(category == "Overdue" ? .red : .gray)
-                        Spacer()
-                    }.padding(.leading, 10)
-                    
                     ForEach(items) { item in
-                        if selectedClass == nil || item.className == selectedClass && item.isCompleted == false {
-                            eventItemView(for: item)
+                        if showCompleted == true {
+                            if selectedClass == nil || item.className == selectedClass {
+                                eventItemView(for: item)
+                            } else {
+                                if selectedClass == nil || item.className == selectedClass && item.isCompleted == false {
+                                    eventItemView(for: item)
+                                }
+                            }
                         }
+
                     }
                     
                 }
@@ -142,7 +142,7 @@ struct HomeScrollingSection: View {
 
 
 #Preview {
-    HomeScrollingSection(
+    SearchScrollingSection(
         events: [
             Event(name: "Homework 1", dueDate: Date(), type: 0, className: "Math", isCompleted: false),
             Event(name: "Project", dueDate: Date(), type: 1, className: "Science", isCompleted: true)

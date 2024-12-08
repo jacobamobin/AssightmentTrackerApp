@@ -130,6 +130,13 @@ struct Item: View {
             let baseColor = convertColorString(classObject.colorString) // Convert colorString to Color
             let secondaryColor = colorDictionary[baseColor] ?? .gray
             
+            if isCompleted == true {
+                return LinearGradient(
+                    colors: [.gray, .gray],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            }
             return LinearGradient(
                 colors: [baseColor, secondaryColor],
                 startPoint: .topLeading,
@@ -182,6 +189,6 @@ func TypeText(_ type: Int) -> (String, String) {
 
 
 #Preview {
-    Item(eventTitle: "Culminating", eventDate: Date(), className: "PCS110", type: 6, isCompleted: false)
+    Item(eventTitle: "Culminating", eventDate: Date(), className: "PCS110", type: 6, isCompleted: true)
 }
 

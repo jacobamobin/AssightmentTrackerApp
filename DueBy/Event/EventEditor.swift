@@ -59,7 +59,7 @@ struct EventEditor: View {
                     }
                     
                     // Event Date
-                    DatePicker("Event Date", selection: $event.dueDate, displayedComponents: .date)
+                    DatePicker("Event Date", selection: $event.dueDate, displayedComponents: [.date, .hourAndMinute])
                     
                     // Class Picker
                     Picker("Class Name", selection: $event.className) {
