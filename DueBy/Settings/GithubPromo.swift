@@ -85,7 +85,6 @@ struct GithubPromo: View {
                 }
             }
         }
-        .padding(5)
         .frame(height: 130)
     }
 }

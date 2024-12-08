@@ -29,7 +29,7 @@ struct Search: View {
             // Class Selector
             ClassSelector(selectedClass: $selectedClass)
 
-            // Toggle for "Show Expired"
+            // Toggle for "Show Completed Work"
             Toggle(isOn: $showExpired) {
                 Text("Show Completed Work")
                     .font(.body)
@@ -38,7 +38,7 @@ struct Search: View {
 
             // Scrolling Section
             SearchScrollingSection(
-                events: events,
+                events: events.filter { shouldIncludeEvent($0) },
                 classes: classes,
                 selectedClass: $selectedClass,
                 showExpired: $showExpired
@@ -46,6 +46,14 @@ struct Search: View {
 
             Spacer()
         }
+    }
+
+    private func shouldIncludeEvent(_ event: Event) -> Bool {
+        // Filter by search text
+        if !searchText.isEmpty && !event.name.localizedCaseInsensitiveContains(searchText) {
+            return false
+        }
+        return true
     }
 }
 
