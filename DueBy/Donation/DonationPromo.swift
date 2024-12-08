@@ -51,6 +51,7 @@ struct DonationPromo: View {
             }
         }
         .frame(height: 70)
+        .padding(5)
         //.padding(.horizontal)
     }
 }

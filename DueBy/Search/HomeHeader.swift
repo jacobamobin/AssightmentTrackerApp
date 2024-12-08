@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeHeader: View {
+    var events: [Event]
+    var classes: [Classes]
     
     @Binding var selectedClass: String?
     
@@ -23,7 +25,7 @@ struct HomeHeader: View {
                     
                     
                     
-                    NavigationLink(destination: Search(selectedClass: $selectedClass)) {
+                    NavigationLink(destination: Search(events: events, classes: classes, selectedClass: $selectedClass)) {
                         Image(systemName: "magnifyingglass")
                             .font(.title)
                             .fontWeight(.bold)
@@ -48,6 +50,3 @@ struct HomeHeader: View {
         
 }
 
-#Preview {
-    HomeHeader(selectedClass: .constant("MTH110"))
-}

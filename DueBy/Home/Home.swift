@@ -20,7 +20,7 @@ struct Home: View {
         NavigationStack {
             ZStack {
                 VStack {
-                    HomeHeader(selectedClass: $selectedClass)
+                    HomeHeader(events: events, classes: classes, selectedClass: $selectedClass)
                     
                     ScrollView {
                         Stats()

@@ -50,7 +50,9 @@ struct Item: View {
         let now = Date()
         let difference = Calendar.current.dateComponents([.day, .hour, .minute], from: now, to: eventDate)
         
-        if !isCompleted {
+        if isCompleted {
+            return "Completed"
+        } else {
             if let days = difference.day, days > 0 {
                 return "In \(days) Days"
             } else if let hours = difference.hour, hours > 0 {
@@ -60,8 +62,6 @@ struct Item: View {
             } else {
                 return "Overdue"
             }
-        } else {
-            return "Completed"
         }
         
     }

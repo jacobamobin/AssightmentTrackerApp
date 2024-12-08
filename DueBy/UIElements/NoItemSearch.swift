@@ -1,20 +1,20 @@
 //
-//  NoItem.swift
+//  NoItemSearch.swift
 //  DueBy
 //
-//  Created by Jacob Mobin on 2024-12-05.
+//  Created by Jacob Mobin on 2024-12-08.
 //
 
 import SwiftUI
 
-struct NoItem: View {
+struct NoItemSearch: View {
     
     @State private var selectedClass: String? = nil
     
     var body: some View {
         VStack {
             
-            Image(systemName: "magnifyingglass")
+            Image(systemName: "folder.badge.questionmark")
                 .font(.system(size: 40, weight: .bold))
                 .foregroundStyle(.secondary)
                 .padding(.bottom, 8)
@@ -25,7 +25,7 @@ struct NoItem: View {
                 .fontWeight(.semibold)
                 .foregroundStyle(.primary)
             
-            Text("To search completed work, Click the Search icon")
+            Text("Try a Different Filter")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
@@ -41,5 +41,6 @@ struct NoItem: View {
 }
 
 #Preview {
-    NoItem()
+    NoItemSearch()
 }
+

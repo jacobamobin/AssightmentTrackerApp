@@ -8,35 +8,44 @@
 import SwiftUI
 
 struct Search: View {
-    
+    var events: [Event]
+    var classes: [Classes]
+
     @Binding var selectedClass: String?
-    
-    @State public var searchText: String = ""
-    @State public var showExpired: Bool = false
-    
+
+    @State private var searchText: String = ""
+    @State private var showExpired: Bool = false
+
     var body: some View {
-        
-        // Search Bar
-        TextField("Search...", text: $searchText)
-            .padding(10)
-            .background(Color(.systemGray6))
-            .cornerRadius(10)
+        VStack {
+            // Search Bar
+            TextField("Search...", text: $searchText)
+                .padding(10)
+                .background(Color(.systemGray6))
+                .cornerRadius(10)
+                .padding(.horizontal)
+                .padding(.vertical, 7)
+
+            // Class Selector
+            ClassSelector(selectedClass: $selectedClass)
+
+            // Toggle for "Show Expired"
+            Toggle(isOn: $showExpired) {
+                Text("Show Completed Work")
+                    .font(.body)
+            }
             .padding(.horizontal)
-            .padding(.vertical, 7)
-        
-        ClassSelector(selectedClass: $selectedClass)
-        
-        // Toggle for "Show Expired"
-        Toggle(isOn: $showExpired) {
-            Text("Show Completed Work")
-                .font(.body)
+
+            // Scrolling Section
+            SearchScrollingSection(
+                events: events,
+                classes: classes,
+                selectedClass: $selectedClass,
+                showExpired: $showExpired
+            )
+
+            Spacer()
         }
-        .padding(.horizontal)
-        
-        Spacer()
     }
 }
 
-#Preview {
-    Search(selectedClass: .constant("MTH110"))
-}

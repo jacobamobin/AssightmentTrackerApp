@@ -23,29 +23,45 @@ struct HomeScrollingSection: View {
             // Group and sort events into the defined categories
             let groupedEvents = groupEvents(events)
             
+            // Calculate the total number of visible items
+            let totalVisibleItems = groupedEvents.flatMap { $0.value }
+                .filter { shouldDisplayEvent($0) }
+                .count
+            
+            // Render categories and items
             ForEach(["Overdue", "Today", "Soon", "Upcoming"], id: \.self) { category in
                 if let items = groupedEvents[category], !items.isEmpty {
-                    
-                    HStack {
-                        Text(category)
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .foregroundStyle(category == "Overdue" ? .red : .gray)
-                        Spacer()
-                    }.padding(.leading, 10)
-                    
-                    ForEach(items) { item in
-                        if selectedClass == nil || item.className == selectedClass && item.isCompleted == false {
+                    VStack(alignment: .leading, spacing: 10) {
+                        // Category header
+                        HStack {
+                            Text("\(category) (\(items.count))")
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .foregroundStyle(category == "Overdue" ? .red : .gray)
+                            Spacer()
+                        }
+                        .padding(.leading, 10)
+                        
+                        // Render each item in the category
+                        ForEach(items.filter { shouldDisplayEvent($0) }) { item in
                             eventItemView(for: item)
                         }
                     }
-                    
                 }
+            }
+            
+            // Show "No Items" view if no items are visible
+            if totalVisibleItems == 0 {
+                NoItem()
             }
         }
         .sheet(item: $eventToEdit) { event in
             EventEditor(event: event)
         }
+    }
+    
+    private func shouldDisplayEvent(_ item: Event) -> Bool {
+        (selectedClass == nil || item.className == selectedClass) && !item.isCompleted
     }
     
     private func eventItemView(for item: Event) -> some View {
@@ -61,11 +77,13 @@ struct HomeScrollingSection: View {
                 completeItem(item)
             } label: {
                 Label("Complete", systemImage: "checkmark.circle")
+                    .foregroundStyle(.green)
             }
             Button {
                 editItem(item)
             } label: {
                 Label("Edit", systemImage: "pencil")
+                    .foregroundStyle(.yellow)
             }
             Button(role: .destructive) {
                 deleteItem(item)
