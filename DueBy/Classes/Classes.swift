@@ -11,17 +11,14 @@ import SwiftUI
 
 @Model
 class Classes: Identifiable {
-    
+    // Make attributes optional or provide defaults
     var id: String
     var name: String
     var colorString: String
     
-    init(name: String, colorString: String) {
-        self.id = UUID().uuidString
+    init(id: String = UUID().uuidString, name: String = "", colorString: String = "") {
+        self.id = id
         self.name = name
         self.colorString = colorString
     }
-    
 }
-
-

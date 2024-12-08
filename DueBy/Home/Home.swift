@@ -23,7 +23,7 @@ struct Home: View {
                     HomeHeader(events: events, classes: classes, selectedClass: $selectedClass)
                     
                     ScrollView {
-                        Stats()
+                        //Stats()
                         
                         ClassSelector(selectedClass: $selectedClass)
                         
