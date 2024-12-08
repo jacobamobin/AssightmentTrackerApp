@@ -11,7 +11,7 @@ import SwiftUI
 
 @Model
 class Event: Identifiable {
-    
+    // Make attributes optional or provide defaults
     var id: String
     var name: String
     var dueDate: Date
@@ -19,15 +19,14 @@ class Event: Identifiable {
     var type: Int
     var isCompleted: Bool
     
-    init(name: String, dueDate: Date, type: Int, className: String, isCompleted: Bool) {
-        self.id = UUID().uuidString
+    init(id: String = UUID().uuidString, name: String = "", dueDate: Date = Date(), className: String = "", type: Int = 0, isCompleted: Bool = false) {
+        self.id = id
         self.name = name
         self.dueDate = dueDate
-        self.type = type
         self.className = className
+        self.type = type
         self.isCompleted = isCompleted
     }
-    
 }
 
 
