@@ -11,7 +11,6 @@ import SwiftUI
 
 @Model
 class Classes: Identifiable {
-    // Make attributes optional or provide defaults
     var id: String
     var name: String
     var colorString: String
