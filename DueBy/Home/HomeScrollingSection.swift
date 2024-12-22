@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import SwipeActions
 
 struct HomeScrollingSection: View {
     @Environment(\.modelContext) private var context
@@ -65,34 +66,39 @@ struct HomeScrollingSection: View {
     }
     
     private func eventItemView(for item: Event) -> some View {
-        Item(
-            eventTitle: item.name,
-            eventDate: item.dueDate,
-            className: item.className,
-            type: item.type,
-            isCompleted: item.isCompleted
-        )
-        .contextMenu {
-            Button {
-                completeItem(item)
-            } label: {
-                Label("Complete", systemImage: "checkmark.circle")
-                    .foregroundStyle(.green)
+        SwipeView() {
+            Item(
+                eventTitle: item.name,
+                eventDate: item.dueDate,
+                className: item.className,
+                type: item.type,
+                isCompleted: item.isCompleted
+            )
+            .contextMenu {
+                Button {
+                    completeItem(item)
+                } label: {
+                    Label("Complete", systemImage: "checkmark.circle")
+                        .foregroundStyle(.green)
+                }
+                Button {
+                    editItem(item)
+                } label: {
+                    Label("Edit", systemImage: "pencil")
+                        .foregroundStyle(.yellow)
+                }
+                Button(role: .destructive) {
+                    deleteItem(item)
+                } label: {
+                    Label("Delete", systemImage: "trash")
+                }
             }
-            Button {
-                editItem(item)
-            } label: {
-                Label("Edit", systemImage: "pencil")
-                    .foregroundStyle(.yellow)
+        } trailingActions: { _ in
+            SwipeAction("World") {
+                print("Tapped!")
             }
-            Button(role: .destructive) {
-                deleteItem(item)
-            } label: {
-                Label("Delete", systemImage: "trash")
-            }
-            
-            
         }
+        
     }
     
     private func deleteItem(_ item: Event) {

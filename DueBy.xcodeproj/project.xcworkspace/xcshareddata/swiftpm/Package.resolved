@@ -1,0 +1,15 @@
+{
+  "originHash" : "e1ade2bc3de8fd2be88b1ca4d89b2fd180c84a7d35b397cd52d129dd6f85fbd4",
+  "pins" : [
+    {
+      "identity" : "swipeactions",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/aheze/SwipeActions",
+      "state" : {
+        "revision" : "41e6f6dce02d8cfa164f8c5461a41340850ca3ab",
+        "version" : "1.1.0"
+      }
+    }
+  ],
+  "version" : 3
+}

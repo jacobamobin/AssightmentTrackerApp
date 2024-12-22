@@ -193,6 +193,9 @@
 			);
 			mainGroup = 2C78F8082CF7DA7B00D1B584;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				2C50A13C2D18B53800C74C7E /* XCRemoteSwiftPackageReference "SwipeActions" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2C78F8122CF7DA7B00D1B584 /* Products */;
 			projectDirPath = "";
@@ -511,6 +514,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2C50A13C2D18B53800C74C7E /* XCRemoteSwiftPackageReference "SwipeActions" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/aheze/SwipeActions";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 2C78F8092CF7DA7B00D1B584 /* Project object */;
 }
