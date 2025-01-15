@@ -16,3 +16,6 @@ Support my work is only to test StoreKit, and is not set up to take donations
 ![Image6](ReadMe/Image6.png)
 ![Image7](ReadMe/Image7.png)
 ![Image8](ReadMe/Image8.png)
+![Image9](ReadMe/Image9.png)
+![Image10](ReadMe/Image10.png)
+![Image11](ReadMe/Image11.png)
