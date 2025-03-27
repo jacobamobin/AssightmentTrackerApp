@@ -26,10 +26,7 @@ DueBy is a powerful assignment tracking application built specifically for iOS 1
 - **Data Storage**: SwiftData
 - **Dependencies**: None (100% Native)
 
-## 📸 App Showcase
-
-<details>
-<summary>Click to view screenshots</summary>
+## 📸 App Screenshots
 
 ### Home Screen & Assignment Management
 <div align="center">
@@ -56,7 +53,6 @@ DueBy is a powerful assignment tracking application built specifically for iOS 1
 <div align="center">
   <img src="ReadMe/Image11.png" alt="More Features" width="250"/>
 </div>
-</details>
 
 ## ⚙️ Installation
 
